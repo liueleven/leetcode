@@ -1,2 +1,2 @@
-# leetcode
-leetcode算法练习
+# leetcode中文版刷题
+
