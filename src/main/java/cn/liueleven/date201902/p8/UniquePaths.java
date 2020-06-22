@@ -1,5 +1,11 @@
 package cn.liueleven.date201902.p8;
 
+import java.util.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+
 /**
  * @description:
  * 一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为“Start” ）。
@@ -35,9 +41,60 @@ package cn.liueleven.date201902.p8;
  * @author: 十一
  */
 public class UniquePaths {
+    private static final int COUNT_BITS = Integer.SIZE - 3;
+    private static final int CAPACITY   = (1 << COUNT_BITS) - 1;
 
-    public static void main(String[] args) {
-        System.out.println(new UniquePaths().uniquePaths(2, 2));
+    // runState is stored in the high-order bits
+    private static final int RUNNING    = -1 << COUNT_BITS;
+    private static final int SHUTDOWN   =  0 << COUNT_BITS;
+    private static final int STOP       =  1 << COUNT_BITS;
+    private static final int TIDYING    =  2 << COUNT_BITS;
+    private static final int TERMINATED =  3 << COUNT_BITS;
+    public static void main(String[] args) throws Exception {
+//
+//        ExecutorService executorService = Executors.newCachedThreadPool();
+//        executorService.execute(null);
+//        System.out.println("RUNNING: "+RUNNING);
+//        System.out.println("SHUTDOWN: "+SHUTDOWN);
+//        System.out.println("STOP: "+STOP);
+//        System.out.println("TIDYING: "+TIDYING);
+//        System.out.println("TERMINATED: "+TERMINATED);
+//        executorService.submit()
+//        gotoLabel();
+
+        Map map = new HashMap<Integer,Integer>(1);
+        map.put(1,1);
+        map.put(3,3);
+        map.put(2,2);
+
+        Iterator iterator = map.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Object next = iterator.next();
+            System.out.println(next);
+        }
+
+        TreeMap treeMap = new TreeMap<Integer,Integer>();
+        treeMap.put(1,1);
+        treeMap.put(3,3);
+        treeMap.put(2,2);
+        Iterator iterator1 = treeMap.entrySet().iterator();
+        while (iterator1.hasNext()) {
+            Object next = iterator1.next();
+            System.out.println(next);
+        }
+    }
+
+    static void gotoLabel() {
+        int count = 2;
+        label:
+        while (true) {
+            if (count > 10) {
+                continue label;
+            }
+            System.out.println(count);
+            count ++;
+        }
+
     }
 
     public  int uniquePaths(int m, int n) {
@@ -63,5 +120,19 @@ public class UniquePaths {
         return dp[m-1][n-1];
     }
 
+    private static class Test implements Callable {
+
+        /**
+         * Computes a result, or throws an exception if unable to do so.
+         *
+         * @return computed result
+         * @throws Exception if unable to compute a result
+         */
+        @Override
+        public Object call() throws Exception {
+            TimeUnit.SECONDS.sleep(2);
+            return "hello";
+        }
+    }
 
 }
